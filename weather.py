@@ -7,24 +7,19 @@ def checkPosition():
     print(f"Screen width: {screenWidth}\nScreen height: {screenHeight}\nx: {currenMouseX}\ny: {currentMouseY}")
 
 def checkWeather():
-    location = input('Enter location to check weather: ')
+    location = input('Enter location to check weather: ').capitalize()
     openFile('chrome')
     pyautogui.hotkey('command','t')
-    pyautogui.moveTo(154,61)
-    pyautogui.click()
-    pyautogui.write('pogoda ' + location.capitalize())
-    pyautogui.press('enter')
+    searchOnGoogle('pogoda ' + location)
     waitForPageLoading()
-    pyautogui.sleep(0.5)
-    pyautogui.screenshot('pogoda.png')
+    fileName = creatFileName(location)
+    pyautogui.screenshot(fileName)
     pyautogui.hotkey('command','w')
-    openFile('pogoda.png')
-    pyautogui.sleep(0.1)
-    pyautogui.hotkey('ctrl','command','f')
+    openFile(fileName)
 
 def openFile(nameOfFile):
     pyautogui.hotkey('command','space')
-    pyautogui.sleep(0.05)
+    pyautogui.sleep(0.1)
     pyautogui.write(nameOfFile)
     pyautogui.press('enter')
 
@@ -32,5 +27,14 @@ def waitForPageLoading():
     while(pyautogui.pixelMatchesColor(92, 59, (255, 255, 255))):
         pyautogui.sleep(0.01)
 
-checkPosition()
+def searchOnGoogle(phrase):
+    pyautogui.click(154,61)
+    pyautogui.write(phrase)
+    pyautogui.press('enter')
+
+def creatFileName(location):
+    now=time.localtime()
+    fileName = 'weather' + location + '_' + str(now.tm_mday) +'.'+ str(now.tm_mon) + '; ' + str(now.tm_hour) + '.' + str(now.tm_min) + '.png' 
+    return fileName
+
 checkWeather()
