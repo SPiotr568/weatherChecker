@@ -1,4 +1,5 @@
 import pyautogui
+import time
 
 def checkPosition():
     screenWidth, screenHeight = pyautogui.size()
@@ -13,6 +14,7 @@ def checkWeather():
     pyautogui.click()
     pyautogui.write('pogoda ' + location.capitalize())
     pyautogui.press('enter')
+    waitForPageLoading()
     pyautogui.sleep(0.5)
     pyautogui.screenshot('pogoda.png')
     pyautogui.hotkey('command','w')
@@ -22,9 +24,13 @@ def checkWeather():
 
 def openFile(nameOfFile):
     pyautogui.hotkey('command','space')
-    pyautogui.sleep(0.1)
+    pyautogui.sleep(0.05)
     pyautogui.write(nameOfFile)
     pyautogui.press('enter')
+
+def waitForPageLoading():
+    while(pyautogui.pixelMatchesColor(92, 59, (255, 255, 255))):
+        pyautogui.sleep(0.01)
 
 checkPosition()
 checkWeather()
