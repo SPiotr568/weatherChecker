@@ -7,10 +7,7 @@ def checkPosition():
 
 def checkWeather():
     location = input('Enter location to check weather: ')
-    pyautogui.hotkey('command','space')
-    pyautogui.sleep(0.1)
-    pyautogui.write('chrome')
-    pyautogui.press('enter')
+    openFile('chrome')
     pyautogui.hotkey('command','t')
     pyautogui.moveTo(154,61)
     pyautogui.click()
@@ -19,13 +16,15 @@ def checkWeather():
     pyautogui.sleep(0.5)
     pyautogui.screenshot('pogoda.png')
     pyautogui.hotkey('command','w')
-    pyautogui.hotkey('command','space')
-    pyautogui.sleep(0.1)
-    pyautogui.write('pogoda.png')
-    pyautogui.press('enter')
+    openFile('pogoda.png')
     pyautogui.sleep(0.1)
     pyautogui.hotkey('ctrl','command','f')
 
+def openFile(nameOfFile):
+    pyautogui.hotkey('command','space')
+    pyautogui.sleep(0.1)
+    pyautogui.write(nameOfFile)
+    pyautogui.press('enter')
 
 checkPosition()
 checkWeather()
